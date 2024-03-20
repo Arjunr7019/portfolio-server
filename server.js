@@ -10,12 +10,12 @@ app.use(cors())
 app.use(express.json())
 
 const transporter = nodemailer.createTransport({
-    host: process.env.HOST,
-    port: process.env.PORT,
+    host: "smtp.elasticemail.com",
+    port: 2525,
     secure: false, // Use `true` for port 465, `false` for all other ports
     auth: {
-        user: process.env.USER,
-        pass: process.env.PASSWORD,
+        user: "arjun.rdell@gmail.com",
+        pass: "1C494D1DBB38318F292187BBEB0BB958C9CD",
     },
 });
 
@@ -27,7 +27,7 @@ app.post("/api/contactForm", async (req, res) => {
 
     const info = await transporter.sendMail({
         from: '"Support Team" <arjun.rdell@gmail.com>', // sender address
-        to: process.env.EMAIL, // list of receivers
+        to: "rarjun7019@gmail.com", // list of receivers
         subject: "Portfolio Form", // Subject line
         text: `
         Name: ${req.body.name}
