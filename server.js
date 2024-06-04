@@ -10,14 +10,15 @@ app.use(cors())
 app.use(express.json())
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.elasticemail.com",
-    port: 2525,
+    service:"gmail",
+    host: "smtp.gmail.com",
+    port: 587,
     secure: false, // Use `true` for port 465, `false` for all other ports
     auth: {
-        user: "arjun.rdell@gmail.com",
-        pass: "1C494D1DBB38318F292187BBEB0BB958C9CD",
+      user: process.env.USER,
+      pass: process.env.APP_PASS
     },
-});
+  });
 
 app.get("/api", (req, res) => {
     res.json("welcome to portfolio server!!");
