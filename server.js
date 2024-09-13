@@ -50,7 +50,16 @@ app.post("/api/userIp", async (req, res) => {
         to: "rarjun7019@gmail.com", // list of receivers
         subject: "Portfolio Form", // Subject line
         text: `
-        ${req.body}`, // plain text body
+        Ip:${req.body.UserIp.Ip}
+        version: ${req.body.UserIp.version}
+        asn: ${req.body.UserIp.asn}
+        city: ${req.body.UserIp.city}
+        country: ${req.body.UserIp.country}
+        latitude: ${req.body.UserIp.latitude}
+        longitude: ${req.body.UserIp.longitude}
+        network: ${req.body.UserIp.network}
+        org: ${req.body.UserIp.org},
+        region: ${req.body.UserIp.region}`, // plain text body
     });
 
     // console.log("Message sent:", info.messageId);
