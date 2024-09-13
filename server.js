@@ -36,7 +36,24 @@ app.post("/api/contactForm", async (req, res) => {
         ${req.body.message}`, // plain text body
     });
 
-    console.log("Message sent:", info.messageId);
+    // console.log("Message sent:", info.messageId);
+
+    res.status(200).json({
+        status: "success"
+    })
+})
+
+app.post("/api/userIp", async (req, res) => {
+
+    const info = await transporter.sendMail({
+        from: '"Support Team" <arjun.rdell@gmail.com>', // sender address
+        to: "rarjun7019@gmail.com", // list of receivers
+        subject: "Portfolio Form", // Subject line
+        text: `
+        ${req.body}`, // plain text body
+    });
+
+    // console.log("Message sent:", info.messageId);
 
     res.status(200).json({
         status: "success"
