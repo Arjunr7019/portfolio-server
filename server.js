@@ -26,8 +26,38 @@ app.get("/api", (req, res) => {
 })
 
 app.post("/api/contactForm", async (req, res) => {
+    // Access data from req.body
+    const data = req.body.userInfo;
+    let file;
 
-    console.log(req.body)
+    // Generate HTML content from data
+    const htmlContent = `
+     <!DOCTYPE html>
+     <html>
+     <head>
+         <title>PDF from Data</title>
+     </head>
+     <body>
+         <h1>Data from Request</h1>
+         <pre>${JSON.stringify(data, null, 2)}</pre>
+     </body>
+     </html>
+     `;
+
+    // Configure PDF generation
+    const pdfOptions = {
+        format: 'A4',
+        orientation: 'portrait',
+    };
+
+    const pdfPath = './output.pdf';
+    // Generate the PDF
+    pdf.create(htmlContent, pdfOptions).toFile(pdfPath, (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Error generating PDF');
+        }
+    });
     const info = await transporter.sendMail({
         from: '"Support Team" <arjun.rdell@gmail.com>', // sender address
         to: "rarjun7019@gmail.com", // list of receivers
@@ -35,37 +65,17 @@ app.post("/api/contactForm", async (req, res) => {
         text: `
         Name: ${req.body.name}
         Email: ${req.body.email}
-        ${req.body.message}
-        User Information: ${req.body.userInfo}`,
+        ${req.body.message}`,
+        attachments: [{
+            filename: 'file.pdf',
+            path: pdfPath,
+            contentType: 'application/pdf'
+        }], // plain text body
     });
-
-    // console.log("Message sent:", info.messageId);
-
     res.status(200).json({
         status: "success"
     })
 })
-
-// app.post("/api/userInfo", async (req, res) => {
-
-//     const textBody = JSON.stringify(req.body);
-//     const info = await transporter.sendMail({
-//         from: '"Support Team" <arjun.rdell@gmail.com>', // sender address
-//         to: "rarjun7019@gmail.com", // list of receivers
-//         subject: "Portfolio Form", // Subject line
-//         attachments: [{
-//             filename: 'file.pdf',
-//             path: 'C:/Users/Username/Desktop/somefile.pdf',
-//             contentType: 'application/pdf'
-//         }], // plain text body
-//     });
-
-//     // console.log("Message sent:", info.messageId);
-
-//     res.status(200).json({
-//         status: "success"
-//     })
-// })
 
 app.post('/api/userInfo', async (req, res) => {
     // Access data from req.body
