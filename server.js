@@ -4,6 +4,7 @@ const pdf = require('html-pdf');
 const nodemailer = require("nodemailer");
 const express = require('express');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 15 minutes
