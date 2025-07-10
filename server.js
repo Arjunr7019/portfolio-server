@@ -10,7 +10,7 @@ const monitorLogs = require('./LogsController/logs')
 
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 15 minutes
-  max: 7, // Limit each IP to 100 requests per windowMs
+  max: 50, // Limit each IP to 100 requests per windowMs
   message: "Too many requests from this IP, please try again after 15 minutes."
 });
 
@@ -35,7 +35,7 @@ app.use("/api", contactFormRoute);
 
 app.get("/api", (req, res) => {
     res.json("welcome to portfolio server!!");
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}\n`)
+    // console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}\n`)
 })
 
 
